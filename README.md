@@ -23,3 +23,7 @@
  - /point/pointMod		/	pointMod.jsp	/	GET
  - /point/pointMod		/					/	POST
  - /point/pointDelete	/					/	GET
+ 
+ 
+ 
+ 
