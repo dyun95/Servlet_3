@@ -3,6 +3,18 @@
   <display-name>Servlet_3</display-name>
 
 <servlet>
+<servlet-name>point</servlet-name>
+<servlet-class>com.iu.point.PointController</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>point</servlet-name>
+	<url-pattern>/point/*</url-pattern>
+</servlet-mapping>
+
+
+
+
+<servlet>
 	<servlet-name>home</servlet-name>
 	<servlet-class>com.iu.home.HomeController</servlet-class>
 </servlet>

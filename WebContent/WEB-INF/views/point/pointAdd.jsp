@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>point Add form</h1>
 
 </body>
 </html>
