@@ -88,9 +88,43 @@ public class PointDAO {
 	
 	
 	//3. Update
+	public int pointMod (PointDTO pointDTO) throws Exception{
+		int result = 0;
+		//1 연결
+		Connection con = DBConnect.getConnect();
+		//2. 쿼리문 작성.
+		String sql = "UPDATE point set name=?,kor= ?, eng= ?,math=? ,total=?, avg=? where num = ?";
+		//3. 미리보내기
+		PreparedStatement st = con.prepareStatement(sql);
+		
+		//?세팅 **********
+		st.setString(1, pointDTO.getName());
+		st.setInt(2, pointDTO.getKor());
+		st.setInt(3, pointDTO.getEng());
+		st.setInt(4, pointDTO.getMath());
+		st.setInt(5, pointDTO.getTotal());
+		st.setDouble(6, pointDTO.getAvg());
+		st.setInt(7, pointDTO.getNum());
+		
+		result = st.executeUpdate();
+		
+		st.close();
+		con.close();
+		
+		return result;
+		
+		
+	}
+	
+	
+	
+	
+	
 	
 	//4. Insert
 	public int pointAdd(PointDTO pointdto) throws Exception {
+		int result = 0;
+		
 		Connection con = DBConnect.getConnect();// 불러오고
 		// 2.쿼리문 (sql)작성.
 		String sql = "insert into point values(?,?,?,?,?,?,?)";
@@ -106,9 +140,9 @@ public class PointDAO {
 		st.setInt(5, pointdto.getMath());
 		st.setInt(6, pointdto.getTotal());
 		st.setDouble(7, pointdto.getAvg());
-
+		
 		// 5. 최종 전송후 처리
-		int result = st.executeUpdate();
+		result = st.executeUpdate();
 
 		// 6. 자원 해제
 		st.close();

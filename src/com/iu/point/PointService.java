@@ -28,6 +28,7 @@ public class PointService {
 		
 	}
 	//4.Insert
+	//DAO에 있는 데이터를 받아와서 
 	public int pointAdd(PointDTO pointDTO) throws Exception {
 		pointDTO.setTotal(pointDTO.getKor() + pointDTO.getEng() + pointDTO.getMath());
 		pointDTO.setAvg(pointDTO.getTotal() / 3.0);
@@ -37,5 +38,15 @@ public class PointService {
 		return result;
 
 	}
+	//5.Update
+	public int pointMod(PointDTO pointDTO) throws Exception {
+		pointDTO.setTotal(pointDTO.getKor() + pointDTO.getEng() + pointDTO.getMath());
+		pointDTO.setAvg(pointDTO.getTotal() / 3.0);
+		 
+		 
+		int result = pointDAO.pointMod(pointDTO);
+		return result;
+	}
+	
 
 }

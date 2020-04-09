@@ -71,24 +71,35 @@ public class PointController extends HttpServlet {
 					/* 포스트일떄 체크값 변경 패스변경 */
 					PointDTO pointDTO = new PointDTO();
 					String name = request.getParameter("name");
+					/* 가져오는 파리미터값이 동일해야함. F12 네트워크 눌러서*/
 					int num = Integer.parseInt(request.getParameter("num"));
 					int kor = Integer.parseInt(request.getParameter("kor"));
 					int eng = Integer.parseInt(request.getParameter("eng"));
 					int math = Integer.parseInt(request.getParameter("math"));
 
-					// dto에다가 웹에서 입력한거 옮겨서 세팅 하고 데배로 전송할거임.
+					// dto에다가 웹에서 입력한거 옮겨서 세팅 하고 데배로 전송할거임. 합쳐서 할려면 밑에처럼
+					/* pointDTO.setName(request.getParameter("name")); */
+					/* pointDTO.setNum(Integer.parseInt(request.getParameter("num"))); */
+					
 					pointDTO.setName(name);
 					pointDTO.setNum(num);
 					pointDTO.setKor(kor);
 					pointDTO.setEng(eng);
 					pointDTO.setMath(math);
 
+					//서비스에서 받아온거
 					int result = pointService.pointAdd(pointDTO);
-					/* path = "../WEB-INF/views/point/pointList.jsp"; */
+					
+					/* 포워드로 보내면 문제점 : 데이터들이 보이질 않음
+					 * path = "../WEB-INF/views/point/pointList.jsp";
+					 *  */
+					
+					/* 리다이렉트로 보내줘야 한다.*/
+					check = false;
 					path = "./pointList"; 
 
 					if (result > 0) {
-						System.out.println("ㅇㅇ");
+						System.out.println("추가완료");
 						RequestDispatcher view = request.getRequestDispatcher(path);
 						view.forward(request, response);
 					} else {
@@ -105,9 +116,38 @@ public class PointController extends HttpServlet {
 
 			} else if (command.equals("/pointMod")) {
 				/* System.out.println("Mod"); */
+				
+				
 				if (method.equals("POST")) {
 					/* 포스트일때 */
+					
+					PointDTO pointDTO = new PointDTO();
+					String name = request.getParameter("name");
+					/* 가져오는 파리미터값이 동일해야함. F12 네트워크 눌러서*/
+					int num = Integer.parseInt(request.getParameter("num"));
+					int kor = Integer.parseInt(request.getParameter("kor"));
+					int eng = Integer.parseInt(request.getParameter("eng"));
+					int math = Integer.parseInt(request.getParameter("math"));
+
+
+					pointDTO.setName(name);
+					pointDTO.setNum(num);
+					pointDTO.setKor(kor);
+					pointDTO.setEng(eng);
+					pointDTO.setMath(math);
+					
+					int result = pointService.pointMod(pointDTO);
+					check = false;
+					
+					
+					path = "./pointSelect?num="+pointDTO.getNum();
+					
 				} else {
+					int num = Integer.parseInt(request.getParameter("num"));
+					
+					PointDTO pointDTO= pointService.pointSelect(num);
+					request.setAttribute("dto", pointDTO);
+					
 					path = "../WEB-INF/views/point/pointMod.jsp";
 				}
 

@@ -46,6 +46,7 @@
 <h1>point Add form</h1>
 	<div class="container">
   <h2>Point Input</h2>
+  <!--  form action ./pointAdd 해서 컨트롤러에서 받아옴  서브밋 버튼클릭하면 -->
   <form action="./pointAdd" method="post">
     <div class="form-group">
       <label for="Name">Name:</label>
@@ -68,11 +69,14 @@
       <label for="Math">Math:</label>
       <input type="text" class="form-control" id="math" placeholder="Enter Math" name="math">
     </div>
-<button type="submit" class="btn btn-default">Submit</button>
+    
+    <input type="button" value="submit"><!-- 삭제해 -->
+    
+    <!-- form 태그가 실행할려변 타입이 submit 이어야 가능 -->
+	<button type="submit" class="btn btn-default">Submit</button>
+	
+	<input type="submit" value="submit"><!-- 삭제해 -->
+
   </form>
-
-
-
-
 </body>
 </html>

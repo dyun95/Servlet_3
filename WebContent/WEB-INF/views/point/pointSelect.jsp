@@ -79,7 +79,8 @@
 						<td>${dto.avg}</td>
 					</tr>
 			</table>
-			
+			<!--수정할려면   -->
+			<a href="./pointMod?num=${dto.num}" class="btn btn-primary">Update</a>
 			<a href="./pointDelete?num=${dto.num}" class="btn btn-danger">Delete</a>
 			
 		</div>
