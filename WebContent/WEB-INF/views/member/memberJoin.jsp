@@ -5,14 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>멤버조인JSP</title>
 <!--BootStrap API  -->
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <!-- BootStrap API -->
 </head>
-<body><nav class="navbar navbar-inverse">
+<body>
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">WebSiteName</a>
@@ -29,7 +30,7 @@
       <li><a href="${ pageContext.request.contextPath }/point/pointList">Point</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <c:if test="${empty member}">		<!-- memberdto가 널이면    -->
+     <c:if test="${empty member}">		<!-- memberdto가 널이면    -->
       <li><a href="${ pageContext.request.contextPath}/member/memberJoin"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
       <li><a href="${ pageContext.request.contextPath}/member/memberLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
     </c:if>
@@ -50,36 +51,43 @@
   <p>This is some text.</p>      
   <p>This is another text.</p>      
 </div>
-
+<h1>point Add form</h1>
 	<div class="container">
-  <h2>Point MOD</h2>
-  <!--  form action ./pointAdd 해서 컨트롤러에서 받아옴  서브밋 버튼클릭하면 -->
-  <form action="./pointMod" method="post">
+  <h2>Point Input</h2>
+  <form action="./memberJoin" method="post">
     <div class="form-group">
-      <label for="Name">Name:</label>
-      <input type="text" value="${dto.name}" class="form-control" id="name" placeholder="Enter Name" name="name">
+      <label for="Id">Id:</label>
+      <input type="text" class="form-control" id="id" placeholder="Enter Id" name="id">
     </div>
     <div class="form-group">
-      <label for="Num">Num:</label>
-      <!--readonly 읽기전용  데이터 넘거가게 -->
-      <input type="text" value="${dto.num }" readonly="readonly" class="form-control" id="num" placeholder="Enter Num" name="num">
+      <label for="Pw">Pw:</label>
+      <input type="text" class="form-control" id="pw" placeholder="Enter Pw" name="pw">
     </div>
     
     <div class="form-group">
-      <label for="Kor">Kor:</label>
-      <input type="text" value="${dto.kor }" class="form-control" id="kor" placeholder="Enter Kor" name="kor">
+      <label for="Name">Name:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
     </div>
     <div class="form-group">
-      <label for="Eng">Eng:</label>
-      <input type="text" value="${dto.eng }" class="form-control" id="eng" placeholder="Enter Eng" name="eng">
+      <label for="Email">Email:</label>
+      <input type="text" class="form-control" id="email" placeholder="Enter Email" name="email">
     </div>
     <div class="form-group">
-      <label for="Math">Math:</label>
-      <input type="text" value="${dto.math }" class="form-control" id="math" placeholder="Enter Math" name="math">
+      <label for="Phone">Phone:</label>
+      <input type="text" class="form-control" id="phone" placeholder="Enter Phone" name="phone">
     </div>
+    <div class="form-group">
+      <label for="Age">Age:</label>
+      <input type="text" class="form-control" id="age" placeholder="Enter age" name="age">
+    </div>
+    
     
     <!-- form 태그가 실행할려변 타입이 submit 이어야 가능 -->
 	<button type="submit" class="btn btn-default">Submit</button>
 	
+
+  </form>
+
+
 </body>
 </html>

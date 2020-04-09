@@ -10,196 +10,152 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//0408서블렛 3번
 /**
  * Servlet implementation class PointController
  */
 @WebServlet("/PointController")
 public class PointController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	// 여기도 생성
+	
 	private PointService pointService;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public PointController() {
+        super();
+        this.pointService = new PointService();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	// 여기도 서비스생성
-	public PointController() {
-		super();
-		this.pointService = new PointService();
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// 한글 인코딩 처리는 항상 맨위에 작성
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		//한글 Encoding 처리
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-
-		// pathInfo
+		
+		//pathInfo
 		String command = request.getPathInfo();
-
-		// Method post, get 인가
+		
+		//Method 형식
 		String method = request.getMethod();
-
-		// 클라에게 보낼방식 Foward(true), redirect(false) 선택
+		
+		//Forward(true), redirect(false) 선택
 		boolean check = true;
-
-		// URL (path)를 담을 변수
-		String path = "";
-
+		
+		//URL(path)를 담을 변수
+		String path="";
+		
 		try {
-
-			if (command.equals("/pointList")) {
-				/* System.out.println("List"); */
-				/* lib에다가 ojdbc6.jar 복사붙이기 */
-
-				/* .서비스에 리스트를 ar로 담아서 */
-				ArrayList<PointDTO> ar = pointService.pointList();
-				/* 여기서 데이터 보냄 pointList에다가 보냄 */
-				request.setAttribute("list", ar);
-
-				path = "../WEB-INF/views/point/pointList.jsp";
-
-			} else if (command.equals("/pointAdd")) {
-				/* System.out.println("Add"); */
-				if (method.equals("POST")) {
-					/* 포스트일떄 체크값 변경 패스변경 */
-					PointDTO pointDTO = new PointDTO();
-					String name = request.getParameter("name");
-					/* 가져오는 파리미터값이 동일해야함. F12 네트워크 눌러서 */
-					int num = Integer.parseInt(request.getParameter("num"));
-					int kor = Integer.parseInt(request.getParameter("kor"));
-					int eng = Integer.parseInt(request.getParameter("eng"));
-					int math = Integer.parseInt(request.getParameter("math"));
-
-					// dto에다가 웹에서 입력한거 옮겨서 세팅 하고 데배로 전송할거임. 합쳐서 할려면 밑에처럼
-					/* pointDTO.setName(request.getParameter("name")); */
-					/* pointDTO.setNum(Integer.parseInt(request.getParameter("num"))); */
-
-					pointDTO.setName(name);
-					pointDTO.setNum(num);
-					pointDTO.setKor(kor);
-					pointDTO.setEng(eng);
-					pointDTO.setMath(math);
-
-					// 서비스에서 받아온거
-					int result = pointService.pointAdd(pointDTO);
-
-					/*
-					 * 포워드로 보내면 문제점 : 데이터들이 보이질 않음 path = "../WEB-INF/views/point/pointList.jsp";
-					 */
-
-					String msg = " 점수 등록실패";
-					if (result > 0) {
-						msg = "점수 등록 성공";
-
-					}
-					request.setAttribute("result", msg);
-					request.setAttribute("path","./pointList" );
-					path = "../WEB-INF/views/common/result.jsp";
-
-				}
-
-				else {
-					/* 겟일떄 */
-					path = "../WEB-INF/views/point/pointAdd.jsp";
-				}
-
-			} else if (command.equals("/pointMod")) {
-				/* System.out.println("Mod"); */
-
-				if (method.equals("POST")) {
-					/* 포스트일때 */
-
-					PointDTO pointDTO = new PointDTO();
-					String name = request.getParameter("name");
-					/* 가져오는 파리미터값이 동일해야함. F12 네트워크 눌러서 */
-					int num = Integer.parseInt(request.getParameter("num"));
-					int kor = Integer.parseInt(request.getParameter("kor"));
-					int eng = Integer.parseInt(request.getParameter("eng"));
-					int math = Integer.parseInt(request.getParameter("math"));
-
-					pointDTO.setName(name);
-					pointDTO.setNum(num);
-					pointDTO.setKor(kor);
-					pointDTO.setEng(eng);
-					pointDTO.setMath(math);
-
-					int result = pointService.pointMod(pointDTO);
-					
-					String msg = "점수 수정 실패";
-					
-					if (result>0) {
-						msg ="점수 수정 성공";
-						request.setAttribute("path", "./pointSelect?num="+pointDTO.getNum());
-					}else {
-						request.setAttribute("path", "./pointList");
-						
-					}
-					request.setAttribute("result", msg);
-					
-					////////
-					path = "../WEB-INF/views/common/result.jsp";
-
-				} else {
-					int num = Integer.parseInt(request.getParameter("num"));
-
-					PointDTO pointDTO = pointService.pointSelect(num);
-					request.setAttribute("dto", pointDTO);
-
-					path = "../WEB-INF/views/point/pointMod.jsp";
-				}
-
-			} else if (command.equals("/pointSelect")) {
-				/* System.out.println("Select"); */
-
-				int num = Integer.parseInt(request.getParameter("num"));
-
-				PointDTO pointDTO = pointService.pointSelect(num);
-
-				request.setAttribute("dto", pointDTO);
-
-				path = "../WEB-INF/views/point/pointSelect.jsp";
-
-			} else if (command.equals("/pointDelete")) {
-				/* System.out.println("Delete"); */
-				int num = Integer.parseInt(request.getParameter("num"));
-				int result = pointService.pointDelete(num);
-				check = false;
-				/* 리다이렉트로 pointList로 보냄. */
-				path = "./pointList";
-
-			} else {
-				System.out.println("ETC");
+			
+		
+		if(command.equals("/pointList")) {
+			 
+			ArrayList<PointDTO> ar = pointService.pointList();
+			request.setAttribute("list", ar);
+			
+			
+			path="../WEB-INF/views/point/pointList.jsp";
+			
+		}else if(command.equals("/pointAdd")) {
+			
+			if(method.equals("POST")) {
+				PointDTO pointDTO = new PointDTO();
+				pointDTO.setName(request.getParameter("name"));
+				pointDTO.setNum(Integer.parseInt(request.getParameter("num")));
+				pointDTO.setKor(Integer.parseInt(request.getParameter("kor")));
+				pointDTO.setEng(Integer.parseInt(request.getParameter("eng")));
+				pointDTO.setMath(Integer.parseInt(request.getParameter("math")));
+				int result = pointService.pointAdd(pointDTO);
+				String msg="점수 등록 실패";
+				if(result>0) {
+					msg = "점수 등록 성공";
+				}				
+				
+				request.setAttribute("result", msg);
+				request.setAttribute("path", "./pointList");
+				path = "../WEB-INF/views/common/result.jsp";
+				
+			}else {
+				path="../WEB-INF/views/point/pointAdd.jsp";
 			}
-		} catch (
-
-		Exception e) {
+			
+			
+			
+		}else if(command.equals("/pointMod")) {
+			
+			if(method.equals("POST")) {
+				PointDTO pointDTO = new PointDTO();
+				pointDTO.setName(request.getParameter("name"));
+				pointDTO.setNum(Integer.parseInt(request.getParameter("num")));
+				pointDTO.setKor(Integer.parseInt(request.getParameter("kor")));
+				pointDTO.setEng(Integer.parseInt(request.getParameter("eng")));
+				pointDTO.setMath(Integer.parseInt(request.getParameter("math")));
+				
+				int result = pointService.pointMod(pointDTO);
+				
+				String msg = "점수 수정 실패";
+				
+				if(result>0) {
+					msg = "점수 수정 성공";
+					request.setAttribute("path", "./pointSelect?num="+pointDTO.getNum());
+				}else {
+					request.setAttribute("path", "./pointList");
+				}
+				
+				request.setAttribute("result", msg);
+				
+				path="../WEB-INF/views/common/result.jsp";
+				
+			}else {
+				int num = Integer.parseInt(request.getParameter("num"));
+				PointDTO pointDTO = pointService.pointSelect(num);
+				request.setAttribute("dto", pointDTO);
+				path="../WEB-INF/views/point/pointMod.jsp";
+			}
+			
+			
+		}else if(command.equals("/pointSelect")) {
+			
+			int num = Integer.parseInt(request.getParameter("num"));
+			
+			PointDTO pointDTO = pointService.pointSelect(num);
+			
+			request.setAttribute("dto", pointDTO);
+			
+			path="../WEB-INF/views/point/pointSelect.jsp";
+			
+			
+		}else if(command.equals("/pointDelete")) {
+			int num = Integer.parseInt(request.getParameter("num"));
+			
+			int result = pointService.pointDelete(num);
+			
+			check=false;
+			path="./pointList";
+			
+		}else {
+			System.out.println("ETC");
+		}
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		// 어디로 보낼건지
-		if (check) {
+		// 
+		if(check) {
 			RequestDispatcher view = request.getRequestDispatcher(path);
 			view.forward(request, response);
-		} else {
-			// false 는 리다이렉트
+		}else {
 			response.sendRedirect(path);
 		}
-
+		
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

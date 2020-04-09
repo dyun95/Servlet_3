@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,8 +32,19 @@
       <li><a href="${ pageContext.request.contextPath }/point/pointList">Point</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    
+    <c:if test="${empty member}">		<!-- memberdto가 널이면    -->
+      <li><a href="${ pageContext.request.contextPath}/member/memberJoin"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="${ pageContext.request.contextPath}/member/memberLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </c:if>
+    
+    <c:if test="${not empty member}">		<!--memberdto가 널이 아니면  -->
+      <li><a href="${ pageContext.request.contextPath}/member/memberPage"><span class="glyphicon glyphicon-user"></span>MyPage</a></li>
+      <li><a href="${ pageContext.request.contextPath}/member/memberLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      <!--1. 로그아웃 요청하면  컨트롤러로 감  -->
+    </c:if>
+    
+    
     </ul>
   </div>
 </nav>
