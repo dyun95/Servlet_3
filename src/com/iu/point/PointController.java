@@ -52,7 +52,7 @@ public class PointController extends HttpServlet {
 			
 		
 		if(command.equals("/pointList")) {
-			 
+			 //서비스에 리스트로 가세요
 			ArrayList<PointDTO> ar = pointService.pointList();
 			request.setAttribute("list", ar);
 			

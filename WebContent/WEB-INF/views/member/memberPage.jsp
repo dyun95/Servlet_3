@@ -1,95 +1,67 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!--BootStrap API  -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!-- BootStrap API -->
-
+<title>memberPage</title>
+<c:import url="../template/boot.jsp"></c:import>
 
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">WebSiteName</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<li class="active"><a
-					href="${ pageContext.request.contextPath }">Home</a></li>
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Page 1-1</a></li>
-						<li><a href="#">Page 1-2</a></li>
-						<li><a href="#">Page 1-3</a></li>
-					</ul></li>
-				<li><a
-					href="${ pageContext.request.contextPath }/point/pointList">Point</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<c:if test="${empty member}">		<!-- memberdto가 널이면    -->
-      <li><a href="${ pageContext.request.contextPath}/member/memberJoin"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="${ pageContext.request.contextPath}/member/memberLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-    </c:if>
-    
-    <c:if test="${not empty member}">		<!--memberdto가 널이 아니면  -->
-      <li><a href="${ pageContext.request.contextPath}/member/memberPage"><span class="glyphicon glyphicon-user"></span>MyPage</a></li>
-      <li><a href="${ pageContext.request.contextPath}/member/memberLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-    </c:if>
-			</ul>
-		</div>
-	</nav>
-	<!--nav  -->
-	<div class="container">
-		<div class="jumbotron">
-			<h1>Bootstrap Tutorial</h1>
-			<p>Bootstrap is the most popular HTML, CSS, and JS framework for
-				developing responsive, mobile-first projects on the web.</p>
-		</div>
-		<p>This is some text.</p>
-		<p>This is another text.</p>
-	</div>
+	<c:import url="../template/header.jsp"></c:import>
 
 	<div class="container">
 		<div class="row">
-			<h1>point Select List page</h1>
+			<h1>회원정보페이지</h1>
 			<!--여기서 받아올려고 한다. EL활용 jstl.jar lib에복사     맨위에다가  링크올리기 -->
 			<table class="table table-hover">
 				<tr class="danger">
 					<td>아이디</td>
-					<td>비밀번호</td>
 					<td>이름</td>
 					<td>이메일</td>
 					<td>폰번호</td>
 					<td>나이</td>
 				</tr>
 				<!--반복문 할필요없음  -->
-					<tr class="info">
-						<td>${dto.id}</td>
-						<td>${dto.pw}</td>
-						<td>${dto.name}</td>
-						<td>${dto.email}</td>
-						<td>${dto.phone}</td>
-						<td>${dto.age}</td>
-					</tr>
+				<tr class="info">
+					<td>${sessionScope.member.id}</td>
+					<td>${sessionScope.member.name}</td>
+					<td>${sessionScope.member.email}</td>
+					<td>${sessionScope.member.phone}</td>
+					<td>${sessionScope.member.age}</td>
+				</tr>
 			</table>
 			<!--수정할려면   -->
-			<a href="./memberUpdate?num=${dto.num}" class="btn btn-primary">Update</a>
-			<a href="./memberDelete?num=${dto.num}" class="btn btn-danger">Delete</a>
-			
+			<button class="btn btn-primary" id="update">Update</button>
+			<button class="btn btn-danger" id="del">Delete</button>
 		</div>
 	</div>
+	<script type="text/javascript">
+	// js document.getElementById
+	// js document.quertSelector
+	// Jquert $(선택자 )
+	$("#del").click(function () {
+			var result = confirm("탈퇴 할꺼야? ");
+			console.log(result);
+			if (result) {
+				alert("탈퇴");
+				//JS location.href : location.href = “URL주소?이름=값&이름=값”;	get
+				 window.location.href="./memberDelete";
+
+			} else {
+				alert("취소");
+			}
+		});
+	
+	$("#update").on("click",function(){
+		 window.location.href="./memberUpdate";
+				
+	});
+		
+	</script>
 
 </body>
 </html>

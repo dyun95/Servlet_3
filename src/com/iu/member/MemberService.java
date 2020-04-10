@@ -18,15 +18,25 @@ public class MemberService {
 	return result;
 		
 	}
-	//2
+	//2 로그인
 	public MemberDTO memberLogin(MemberDTO memberDTO)throws Exception{
 		return memberDAO.memberLogin(memberDTO);
 		
 	}
-	//3
-	public MemberDTO memberPage(String name)throws Exception {
-		return memberDAO.memberPage(name);
+	//delete
+	public int memberDelete(MemberDTO memberDTO) throws Exception{
+		return memberDAO.memberDelete(memberDTO);
+		
 	}
+	
+	
+	//update
+	public int memberUpdate(MemberDTO memberDTO)throws Exception{
+		return memberDAO.memberUpdate(memberDTO);
+				
+	}
+	
+	
 	
 	
 }

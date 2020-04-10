@@ -55,35 +55,46 @@ public class MemberDAO {
 		con.close();
 		
 		return memberDTO;
+		// 끝나면 서비스로
 	}
-		
-	public MemberDTO memberPage(String name)throws Exception {
-		MemberDTO memberDTO = null;
+	//delete
+	public int memberDelete(MemberDTO memberDTO) throws Exception{
 		Connection con = DBConnect.getConnect();
-		String sql = "select * from member where id =? ";
+		String sql = "delete member where id = ?";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, name);
-		ResultSet rs = st.executeQuery();
-		
-		if(rs.next()) {
-			memberDTO = new MemberDTO();
-			memberDTO.setId(rs.getString("id"));
-			memberDTO.setPw(rs.getString("pw"));
-			memberDTO.setName(rs.getString("name"));
-			memberDTO.setEmail(rs.getString("email"));
-			memberDTO.setPhone(rs.getString("phone"));
-			memberDTO.setAge(rs.getInt("age"));
-			
-			
-		}
-		rs.close();
+		st.setString(1, memberDTO.getId());
+		int result = st.executeUpdate();
+		 
 		st.close();
 		con.close();
 		
-		return memberDTO;
-		
-		
+		return result;
 	}
+	
+	
+	//update
+	public int memberUpdate(MemberDTO memberDTO) throws Exception {
+		int result =0;
+		Connection con = DBConnect.getConnect();
+		//2. 쿼리문 작성.
+		String sql = "UPDATE member set name= ?, email= ?,phone=? ,age=? where id = ?";
+		//3. 미리보내기
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, memberDTO.getName());
+		st.setString(2, memberDTO.getEmail());
+		st.setString(3, memberDTO.getPhone());
+		st.setInt(4, memberDTO.getAge());
+		st.setString(5, memberDTO.getId());
+		
+		result = st.executeUpdate();
+		
+		st.close();
+		con.close();
+		return result;
+	}
+	
+		
+	
 	
 	
 }

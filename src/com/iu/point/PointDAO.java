@@ -45,7 +45,8 @@ public class PointDAO {
 		st.close();
 		con.close();
 		
-		return ar;
+		return ar; 
+		//끝나면 서비스로 
 	}//point list end
 	
 	//2. SelectOne

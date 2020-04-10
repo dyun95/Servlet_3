@@ -15,6 +15,7 @@ import org.bouncycastle.pqc.math.linearalgebra.GoppaCode.MaMaPe;
 /**
  * Servlet implementation class MemberController
  */
+//서블렛
 @WebServlet("/MemberController")
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -73,6 +74,7 @@ public class MemberController extends HttpServlet {
 				memberDTO = memberService.memberLogin(memberDTO);
 				if(memberDTO !=null) {
 					/* 세션은 request 에 있음*/
+					/* 파라미터는 사라지기때문에 세션으로 담아야함 로그인*/
 					HttpSession session = request.getSession();
 					session.setAttribute("member", memberDTO);
 					
@@ -100,25 +102,73 @@ public class MemberController extends HttpServlet {
 			path = "../";
 			
 		}else if(command.equals("/memberPage")) {
+			//로그인한 사람만 들어갈수 있으니 
+			/*  오류 발생한 이유 : request 속성명을  불러와서 안떳음.*/
+			//   / 가야하니까 
+			path="../WEB-INF/views/member/memberPage.jsp";
+			
+		}else if(command.equals("/memberDelete")) {
+			 HttpSession session= request.getSession();
+			 //세션은 오브젝트 객체이기에 감싸야함.
+			 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			System.out.println(memberDTO.getId());
+			int result = memberService.memberDelete(memberDTO);
+			
+			if(result>0) {
+				session.invalidate();
+			}
+			check=false;
+			path="../";
+			
+			
+			
+		}else if(command.equals("/memberUpdate")) {
+			
 			if(method.equals("POST")) {
-				String name = request.getParameter("name");
+				//db가서 업데이트
+				HttpSession session = request.getSession();
+				MemberDTO memberDTO = new MemberDTO();
+				memberDTO.setId(request.getParameter("id"));
+				memberDTO.setPw(request.getParameter("pw"));
+				memberDTO.setName(request.getParameter("name"));
+				memberDTO.setEmail(request.getParameter("email"));
+				memberDTO.setPhone(request.getParameter("phone"));
+				memberDTO.setAge(Integer.parseInt(request.getParameter("age")));
+				//위 데이터 가지고 업데이트
+				int result = memberService.memberUpdate(memberDTO);
 				
-				MemberDTO memberDTO = memberService.memberPage(name);
-				request.setAttribute("dto", memberDTO);
 				
-				path="../WEB-INF/views/member/memberPage.jsp";
+				if(result>0) {
+					//세션데이터를 바뀐 데이터로 수정
+					session.setAttribute("member", memberDTO);
+				}
+				
+				
+				//리다이렉트로 인덱스
+				check=false;
+				path = "../";
+				
+				
+				
+			}else {
+				//get이라면 여기 가서 데이터 입력하면 post로
+				path = "../WEB-INF/views/member/memberUpdate.jsp";
 			}
 			
-		}else {
+		}
+		else {
 			System.out.println("ETC");
 		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if(check) {
+			// jsp로 가기위해서 forward
+			//forward (t) 
 			RequestDispatcher view = request.getRequestDispatcher(path);
 			view.forward(request, response);
 		}else {
+			//redirect (f)
 			response.sendRedirect(path);
 		}
 		
