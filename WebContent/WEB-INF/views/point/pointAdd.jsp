@@ -37,12 +37,12 @@
       <input type="text" class="form-control" id="math" placeholder="Enter Math" name="math">
     </div>
     
-    <input type="button" value="submit"><!-- 삭제해 -->
+    
     
     <!-- form 태그가 실행할려변 타입이 submit 이어야 가능 -->
 	<button type="submit" class="btn btn-default">Submit</button>
 	
-	<input type="submit" value="submit"><!-- 삭제해 -->
+	
 
   </form>
 </body>

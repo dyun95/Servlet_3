@@ -20,6 +20,7 @@
       <!--GET 방식 <a>태그   -->
       <!--POST 방식은 <form>태그에서 POST타입만  -->
       <li><a href="${ pageContext.request.contextPath }/point/pointList">Point</a></li>
+      <li><a href="${ pageContext.request.contextPath }/notice/noticeList">notice</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
     
@@ -33,7 +34,7 @@
       <li><a href="${ pageContext.request.contextPath}/member/memberLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
       <!--1. 로그아웃 요청하면  컨트롤러로 감  -->
     </c:if>
-    
+
     
     </ul>
   </div>
