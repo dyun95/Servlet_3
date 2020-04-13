@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>Servlet_3</display-name>
+  
+ <!--  -->
+ <context-param>
+ 	<param-name></param-name>
+ 	<param-value></param-value>
+ </context-param>
+  
 
 <servlet>
 <servlet-name>point</servlet-name>
@@ -39,11 +46,44 @@
 <servlet>
 <servlet-name>notice</servlet-name>
 <servlet-class>com.iu.notice.NoticeController</servlet-class>
+
 </servlet>
 <servlet-mapping>
 	<servlet-name>notice</servlet-name>
 	<url-pattern>/notice/*</url-pattern>
 </servlet-mapping>
+
+
+<!--필터 생성  encode -->
+<filter>
+	<filter-name>encode</filter-name>
+	<filter-class>com.iu.filter.EncodingFilter</filter-class>
+	<!--파라미터  :이름, 밸류로 구성  -->
+	<init-param>
+	<param-name>enc</param-name>
+	<param-value>UTF-8</param-value>
+	</init-param>
+</filter>
+<filter-mapping>
+<filter-name>encode</filter-name>
+<url-pattern>/*</url-pattern>
+</filter-mapping>
+
+<!--필터 생성 admin  -->
+<filter>
+	<filter-name>admin</filter-name>
+	<filter-class>com.iu.filter.AdminFilter</filter-class>
+</filter>
+<filter-mapping>
+<filter-name>admin</filter-name>
+<url-pattern>/point/pointAdd</url-pattern>
+</filter-mapping>
+
+<!-- 매핑은 두개이상 가능하다 필터 이름이 동일하면  -->
+<filter-mapping>
+<filter-name>admin</filter-name>
+<url-pattern>/notice/noticeAdd</url-pattern>
+</filter-mapping>
 
 
 

@@ -26,7 +26,7 @@
     </div>
     <div class="form-group">
       <label for="Id">id:</label>
-      <input type="text" class="form-control" id="id" readonly="readonly" value="${dto.id}" name="id">
+      <input type="text" class="form-control" id="id" readonly="readonly" value="${member.id}" name="id">
     </div>
 
  

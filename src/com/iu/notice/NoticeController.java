@@ -32,7 +32,7 @@ public class NoticeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//한글 인코딩 처리.
+		//한글 인코딩 처리. xml에다가 만들어서 삭제해도가능
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
@@ -92,7 +92,7 @@ public class NoticeController extends HttpServlet {
 						
 						/* check = false; 안되면 추가1  */
 						/*path="./noticeList";   체크펄스 해도 안되면 밑에 지욱 2번추가*/
-						path="../WEB-INF/views/notice/noticeList.jsp";
+						path="./noticeList";
 						
 					}else {
 						int num = Integer.parseInt(request.getParameter("no"));

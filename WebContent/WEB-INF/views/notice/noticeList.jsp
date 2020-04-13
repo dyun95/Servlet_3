@@ -36,6 +36,7 @@
 				</c:forEach>
 
 			</table>
+			
  			<c:if test="${member.id eq 'admin'}">	
 			<a href="./noticeAdd" class="btn btn-primary">글쓰기</a>
 			</c:if>
