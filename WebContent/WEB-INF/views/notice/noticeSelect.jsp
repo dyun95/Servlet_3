@@ -16,12 +16,17 @@
 			<!--여기서 받아올려고 한다. EL활용 jstl.jar lib에복사     맨위에다가  링크올리기 -->
 			<table class="table table-hover">
 				<tr class="danger">
-					<!-- <td>no</td> -->
+					<td>no</td>
+					<td>id</td>
+					<td>제목</td>
 					<td>내용</td>
+					
 				</tr>
 				<!--반복문 할필요없음  -->
 					<tr class="info">
-						<%-- <td> ${dto.no} </td> --%>
+						<td>${dto.no}</td>
+						<td>${dto.id}</td>
+						<td>${dto.subject}</td>
 						<td>${dto.content}</td>
 						
 					</tr>
@@ -31,10 +36,6 @@
 			 
 			<a href="./noticeMod?no=${dto.no}" class="btn btn-primary">Update</a>
 			<a href="./noticeDelete?no=${dto.no}" class="btn btn-danger">Delete</a>
-			
-			
-		</div>
-	</div>
 
 
 

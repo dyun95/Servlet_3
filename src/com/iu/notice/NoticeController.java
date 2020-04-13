@@ -1,7 +1,6 @@
 package com.iu.notice;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -10,10 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.iu.point.PointDTO;
-
-
 
 /**
  * Servlet implementation class NoticeController
@@ -71,26 +66,16 @@ public class NoticeController extends HttpServlet {
 						NoticeDTO noticeDTO = new NoticeDTO();
 						
 
-					
-						noticeDTO.setNo(Integer.parseInt(request.getParameter("no")));
 						noticeDTO.setSubject (request.getParameter("subject"));
 						noticeDTO.setContent(request.getParameter("content"));
-						noticeDTO.setId(request.getParameter("id"));
-						noticeDTO.setNdate(( request.getParameter("ndate")));
-						noticeDTO.setHit( Integer.parseInt(request.getParameter("hit")));
+						noticeDTO.setId(request.getParameter("id"));						
 						int result = noticeService.noticeAdd(noticeDTO);
-						String msg = "게시판 등록 실패";
-						
-						if(result>0) {
-							msg = "게시판 등록 성공";
-						}				
-						
-						request.setAttribute("result", msg);
-						request.setAttribute("path", "./noticeList");
-						path = "../WEB-INF/views/common/result.jsp";
+							
+						check = false;
+						path = "../";
 						
 					}else {
-						path="../WEB-INF/views/point/noticeAdd.jsp";
+						path="../WEB-INF/views/notice/noticeAdd.jsp";
 					}
 					
 					
@@ -102,23 +87,12 @@ public class NoticeController extends HttpServlet {
 						noticeDTO.setSubject (request.getParameter("subject"));
 						noticeDTO.setContent(request.getParameter("content"));
 						noticeDTO.setId(request.getParameter("id"));
-						noticeDTO.setHit( Integer.parseInt(request.getParameter("hit")));
+						
 						int result = noticeService.noticeAdd(noticeDTO);
 						
-						
-						
-						String msg = "게시판 수정 실패";
-						
-						if(result>0) {
-							msg = "게시판 수정 성공";
-							request.setAttribute("path", "./noticeSelect?no="+noticeDTO.getNo());
-						}else {
-							request.setAttribute("path", "./notcieList");
-						}
-						
-						request.setAttribute("result", msg);
-						
-						path="../WEB-INF/views/common/result.jsp";
+						/* check = false; 안되면 추가1  */
+						/*path="./noticeList";   체크펄스 해도 안되면 밑에 지욱 2번추가*/
+						path="../WEB-INF/views/notice/noticeList.jsp";
 						
 					}else {
 						int num = Integer.parseInt(request.getParameter("no"));

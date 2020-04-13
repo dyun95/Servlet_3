@@ -10,12 +10,11 @@
 </head>
 <body>
 <c:import url="../template/header.jsp"></c:import>
+
+
 <h1>notice add</h1>
   <form action="./noticeAdd" method="post">
-    <div class="form-group">
-      <label for="No">NO:</label>
-      <input type="text" class="form-control" id="no" readonly="readonly" placeholder="Enter no" name="no">
-    </div>
+  
     <div class="form-group">
       <label for="Subject">제목:</label>
       <input type="text" class="form-control" id="subject" placeholder="Enter 제목" name="subject">
@@ -27,16 +26,10 @@
     </div>
     <div class="form-group">
       <label for="Id">id:</label>
-      <input type="text" class="form-control" id="id" placeholder="Enter id" name="id">
+      <input type="text" class="form-control" id="id" readonly="readonly" value="${dto.id}" name="id">
     </div>
-    <div class="form-group">
-      <label for="Date">date:</label>
-      <input type="text" class="form-control" id="ndate" readonly="readonly" placeholder="Enter date" name="ndate">
-    </div>
-       <div class="form-group">
-      <label for="Hit">hit:</label>
-      <input type="text" class="form-control" id="hit" placeholder="Enter hit" name="hit">
-    </div>
+
+ 
       
     
     <!-- form 태그가 실행할려변 타입이 submit 이어야 가능 -->
@@ -45,6 +38,7 @@
 	
 
   </form>
+
 
 
 

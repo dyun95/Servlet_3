@@ -10,10 +10,9 @@
 </head>
 <body>
 <c:import url="../template/header.jsp"></c:import>
-<h1>notice list page</h1>
-<div class="container">
-		<div class="row">
-			<h1>notice List page</h1>
+
+
+<h1>notice List page</h1>
 			<!--여기서 받아올려고 한다. EL활용 jstl.jar lib에복사     맨위에다가  링크올리기 -->
 			<table class="table table-hover">
 				<tr>
@@ -37,11 +36,11 @@
 				</c:forEach>
 
 			</table>
- 
-			<a href="./noticeAdd" class="btn btn-primary">notice Add</a>
-
-		</div>
-	</div>
+ 			<c:if test="${member.id eq 'admin'}">	
+			<a href="./noticeAdd" class="btn btn-primary">글쓰기</a>
+			</c:if>
+		
+	
 
 
 </body>

@@ -3,13 +3,12 @@ package com.iu.notice;
 import java.sql.Date;
 
 public class NoticeDTO {
-	
+
 	private int no;
 	private String subject;
 	private String content;
 	private String id;
-	private String ndate;
-	private int hit;
+	private Date ndate;
 	public int getNo() {
 		return no;
 	}
@@ -34,10 +33,10 @@ public class NoticeDTO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getNdate() {
+	public Date getNdate() {
 		return ndate;
 	}
-	public void setNdate(String ndate) {
+	public void setNdate(Date ndate) {
 		this.ndate = ndate;
 	}
 	public int getHit() {
@@ -46,9 +45,5 @@ public class NoticeDTO {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	
-	
-	
-	
-
+	private int hit;
 }

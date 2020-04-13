@@ -4,10 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Calendar;
-
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
-
 import com.iu.util.DBConnect;
 
 public class NoticeDAO {
@@ -31,7 +27,7 @@ public class NoticeDAO {
 			noticeDTO.setSubject(rs.getString("subject"));
 			noticeDTO.setContent(rs.getString("content"));
 			noticeDTO.setId(rs.getString("id"));
-			noticeDTO.setNdate(rs.getString("ndate"));
+			noticeDTO.setNdate(rs.getDate("ndate"));
 			noticeDTO.setHit(rs.getInt("hit"));
 			
 			ar.add(noticeDTO);
@@ -61,7 +57,7 @@ public class NoticeDAO {
 			noticeDTO.setSubject(rs.getString("subject"));
 			noticeDTO.setContent(rs.getString("content"));
 			noticeDTO.setId(rs.getString("id"));
-			noticeDTO.setNdate(rs.getString("ndate"));
+			noticeDTO.setNdate(rs.getDate("ndate"));
 			noticeDTO.setHit(rs.getInt("hit"));
 			
 			
@@ -82,7 +78,7 @@ public class NoticeDAO {
 		//1 연결
 		Connection con = DBConnect.getConnect();
 		//2. 쿼리문 작성.
-		String sql = "UPDATE notice set subject= ?, content= ?,id=? ,ndate=?, hit=? where no = ?";
+		String sql = "UPDATE notice set subject= ?, content= ?,id=? where no = ?";
 		//3. 미리보내기
 		PreparedStatement st = con.prepareStatement(sql);
 		
@@ -90,10 +86,8 @@ public class NoticeDAO {
 		
 		st.setString(1, noticeDTO.getSubject());
 		st.setString(2, noticeDTO.getContent());
-		st.setString(3, noticeDTO.getId());
-		st.setString(4, noticeDTO.getNdate());
-		st.setInt(5, noticeDTO.getHit());
-		st.setInt(6, noticeDTO.getNo());
+		st.setString(3, noticeDTO.getId());	
+		st.setInt(4, noticeDTO.getNo());
 		
 		
 		
@@ -109,23 +103,16 @@ public class NoticeDAO {
 	
 	// add
 	public int noticeAdd(NoticeDTO noticeDTO)throws Exception{
-		int result = 0;
-		Calendar calendar = Calendar.getInstance();
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH);
-		int date = calendar.get(Calendar.DATE);//오늘 날짜를 객체로 저장
-		System.out.println(year+""+0+(month+1)+""+date);
-		
-		
+		int result = 0;				
 		Connection con = DBConnect.getConnect();
-		String sql = "INSERT INTO notice VALUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO notice VALUES (notice_seq.nextval,?,?,?,sysdate,0)";
 		PreparedStatement st = con.prepareStatement(sql);
-		st.setInt(1, noticeDTO.getNo());
-		st.setString(2, noticeDTO.getSubject());
-		st.setString(3, noticeDTO.getContent());
-		st.setString(4, noticeDTO.getId());
-		st.setString(5, noticeDTO.getNdate());
-		st.setInt(6, noticeDTO.getHit());
+		
+		st.setString(1, noticeDTO.getSubject());
+		st.setString(2, noticeDTO.getContent());
+		st.setString(3, noticeDTO.getId());
+		
+		
 		
 		result = st.executeUpdate();
 		st.close();

@@ -15,7 +15,7 @@
   <form action="./noticeMod" method="post">
     <div class="form-group">
       <label for="No">NO:</label>
-      <input type="text" value="${dto.no}" class="form-control" id="no" placeholder="Enter no" name="no">
+      <input type="text" value="${dto.no}" class="form-control" id="no" readonly="readonly" placeholder="Enter no" name="no">
     </div>
     <div class="form-group">
       <label for="Subject">제목:</label>
@@ -28,7 +28,7 @@
     </div>
     <div class="form-group">
       <label for="Id">id:</label>
-      <input type="text" value="${dto.id} class="form-control" id="id" placeholder="Enter id" name="id">
+      <input type="text" value="${dto.id} class="form-control" id="id" readonly="readonly" placeholder="Enter id" name="id">
     </div>
     <div class="form-group">
       <label for="Date">date:</label>
